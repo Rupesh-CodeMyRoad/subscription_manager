@@ -5,22 +5,24 @@ USE xgile_subs_manager;
 DROP TABLE IF EXISTS sub_type;
 CREATE TABLE sub_type
 (
-    sub_type_id bigint(20)   NOT NULL AUTO_INCREMENT,
+    sub_type_id bigint       NOT NULL AUTO_INCREMENT,
     sub_name    varchar(100) NOT NULL,
-    status      varchar(50)  NULL,
+    status      boolean      NULL,
+    UNIQUE KEY (sub_name),
     PRIMARY KEY (sub_type_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-DROP TABLE IF EXISTS sub_service_mapping;
-CREATE TABLE sub_service_mapping
+DROP TABLE IF EXISTS sub_mapping;
+CREATE TABLE sub_mapping
 (
-    sub_service_mapping_id int(20)      NOT NULL AUTO_INCREMENT,
-    sub_reference_id       varchar(255) NOT NULL,
-    status                 varchar(50)  NULL,
-    date_logged            datetime     NOT NULL,
-    sub_type_id            bigint(20)   NOT NULL UNIQUE,
-    PRIMARY KEY (sub_service_mapping_id),
+    sub_mapping_id   bigint       NOT NULL AUTO_INCREMENT,
+    sub_reference_id varchar(255) NOT NULL,
+    consumer_name     varchar(255) NOT NULL,
+    status           boolean      NULL,
+    date_logged      datetime     NOT NULL,
+    sub_type_id      bigint       NOT NULL UNIQUE,
+    PRIMARY KEY (sub_mapping_id),
     UNIQUE KEY (sub_reference_id),
     CONSTRAINT FOREIGN KEY (sub_type_id) REFERENCES sub_type (sub_type_id)
 ) ENGINE = InnoDB
