@@ -16,4 +16,7 @@ public class SubMappingDto {
     @NotNull(message = "Subscription Type should not be blank")
     private Long subType;
 
+    @NotNull(message = "Consumer name should not be blank")
+    private String consumerName;
+
 }

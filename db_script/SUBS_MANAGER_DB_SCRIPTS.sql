@@ -18,7 +18,7 @@ CREATE TABLE sub_mapping
 (
     sub_mapping_id   bigint       NOT NULL AUTO_INCREMENT,
     sub_reference_id varchar(255) NOT NULL,
-    consumer_name     varchar(255) NOT NULL,
+    consumer_name    varchar(255) NOT NULL,
     status           boolean      NULL,
     date_logged      datetime     NOT NULL,
     sub_type_id      bigint       NOT NULL UNIQUE,

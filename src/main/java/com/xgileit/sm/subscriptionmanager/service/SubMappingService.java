@@ -3,10 +3,11 @@ package com.xgileit.sm.subscriptionmanager.service;
 import com.xgileit.sm.subscriptionmanager.dto.SubMappingDto;
 import com.xgileit.sm.subscriptionmanager.model.SubMapping;
 
+import java.util.Map;
+
 public interface SubMappingService {
-   // SubMapping saveUpdateSubMapping(SubTypeDto subTypeDto);
 
 	SubMapping saveUpdateSubMapping(SubMappingDto subMappingDto);
 
-	Boolean getSubStatusByRefId(String refId);
+	Map<String,Object> getSubStatusByRefId(String subReferenceId);
 }
