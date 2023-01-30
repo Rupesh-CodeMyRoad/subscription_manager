@@ -5,4 +5,6 @@ import com.xgileit.sm.subscriptionmanager.model.SubType;
 
 public interface SubTypeService {
     SubType saveUpdateSubType(SubTypeDto subTypeDto);
+
+	SubType findSubTypeById(Long subTypeId);
 }

@@ -1,38 +1,40 @@
 package com.xgileit.sm.subscriptionmanager.service.serviceImpl;
 
-import com.xgileit.sm.subscriptionmanager.dto.SubMappingDto;
-import com.xgileit.sm.subscriptionmanager.model.SubMapping;
-import com.xgileit.sm.subscriptionmanager.model.SubType;
-import com.xgileit.sm.subscriptionmanager.repo.SubMappingRepo;
-import com.xgileit.sm.subscriptionmanager.repo.SubTypeRepo;
-import com.xgileit.sm.subscriptionmanager.service.SubMappingService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.xgileit.sm.subscriptionmanager.model.SubType;
+import com.xgileit.sm.subscriptionmanager.dto.SubMappingDto;
+import com.xgileit.sm.subscriptionmanager.model.SubMapping;
+import com.xgileit.sm.subscriptionmanager.repo.SubMappingRepo;
+import com.xgileit.sm.subscriptionmanager.repo.SubTypeRepo;
+import com.xgileit.sm.subscriptionmanager.service.SubMappingService;
+
+import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class SubMappingServiceImpl implements SubMappingService {
 
-    private final SubMappingRepo subMappingRepo;
-    private final SubTypeRepo subTypeRepo;
-
+   
+    private final SubTypeRepo suboTypeRepo;
+    private final  SubMappingRepo subMappingRepo;
 
     @Override
     public SubMapping saveUpdateSubMapping(SubMappingDto subMappingDto) {
-        SubMapping subMapping;
-        SubType subType = subTypeRepo.findById(subMappingDto.getSubType()).orElseThrow(() -> new RuntimeException("Subscription type not found"));
+       SubMapping subMapping;
+        SubType subType = suboTypeRepo.findById(subMappingDto.getSubType()).orElseThrow(() -> new RuntimeException("Subscription type not found"));
         if (subType.getStatus() == false) {
             throw new RuntimeException("Subscription service is deactivated. Sorry for the inconvenience");
         }
         String uniqueRefId = generateUniqueId(subMappingDto.getConsumerName(), subType.getSubName());
-        if (subMappingDto.getSubMappingId() == null) {
+  //  subMappingRepo.findById(subMappingDto.getSubMappingId())
+        
+        if (!subMappingRepo.findById(subMappingDto.getSubMappingId()).isPresent()) {
             subMapping = new SubMapping();
             subMapping.setSubMappingId(subMappingDto.getSubMappingId());
             subMapping.setSubReferenceId(uniqueRefId);
@@ -53,7 +55,7 @@ public class SubMappingServiceImpl implements SubMappingService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-
+  
     }
 
 

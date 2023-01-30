@@ -24,8 +24,7 @@ public class SubTypeServiceImpl implements SubTypeService {
                     .status(true)
                     .build();
         } else {
-            subType = subTypeRepo.findById(subTypeDto.getSubTypeId())
-                    .orElseThrow(() -> new RuntimeException("Subscription type not found"));
+            subType = findSubTypeById(subTypeDto.getSubTypeId());
             subType.setSubName(subTypeDto.getSubName());
             subType.setStatus(subTypeDto.getStatus());
         }
@@ -36,4 +35,10 @@ public class SubTypeServiceImpl implements SubTypeService {
         }
         return subType;
     }
+
+	@Override
+	public SubType findSubTypeById(Long subTypeId) {
+		return subTypeRepo.findById(subTypeId)
+                .orElseThrow(() -> new RuntimeException("Subscription type not found"));
+	}
 }
